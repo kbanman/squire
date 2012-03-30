@@ -35,7 +35,11 @@
 
 Route::get('/', function()
 {
-	return View::make('home.index');
+	return View::make('template')
+		//->with('layout', 'sidebar_left')
+		->with('sitename', 'Squire')
+		->with('title', 'Squire - Home')
+		->nest('content', 'home.index');
 });
 
 /*
