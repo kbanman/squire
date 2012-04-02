@@ -44,7 +44,14 @@ return array(
 		$view->nav = View::make('partials.nav')->with('items', $view->nav);
 
 		// Search form
-		! empty($view->search) and $view->search = View::make('partials.search');
+		if (empty($view->search) and ! empty($config['search']))
+		{
+			$view->search = View::make('partials.search', $config['search']);
+		}
+		else
+		{
+			$view->search = '';
+		}
 
 		// Content
 		empty($view->content) and $view->content = '';
