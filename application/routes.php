@@ -33,6 +33,8 @@
 |
 */
 
+Route::controller('search');
+
 Route::get('/', function()
 {
 	return View::make('template')

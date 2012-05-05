@@ -33,4 +33,8 @@
 |
 */
 
-return array();
+return array(
+	'squi' => array('auto' => true),
+	'anbu' => array('auto' => true),
+	'crm' => array('auto' => true),
+);
