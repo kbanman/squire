@@ -51,7 +51,7 @@ abstract class Relationship extends Query {
 		// Next we'll set the fluent query builder for the relationship and
 		// constrain the query such that it only returns the models that
 		// are appropriate for the relationship.
-		$this->table = $this->query();
+		$this->table = $this->table();
 
 		$this->constrain();
 	}
@@ -99,6 +99,24 @@ abstract class Relationship extends Query {
 	public function foreign_key()
 	{
 		return static::foreign($this->base, $this->foreign);
+	}
+
+	/**
+	 * Gather all the primary keys from a result set.
+	 *
+	 * @param  array  $results
+	 * @return array
+	 */
+	public function keys($results)
+	{
+		$keys = array();
+
+		foreach ($results as $result)
+		{
+			$keys[] = $result->get_key();
+		}
+
+		return array_unique($keys);
 	}
 
 }

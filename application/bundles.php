@@ -37,4 +37,5 @@ return array(
 	'squi' => array('auto' => true),
 	'anbu' => array('auto' => true),
 	'crm' => array('auto' => true),
+	'docs' => array('handles' => 'docs'),
 );
