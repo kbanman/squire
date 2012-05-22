@@ -22,7 +22,7 @@ class Crm_Create_Communications_Tables {
 			$table->integer('direction_id');
 			$table->text('notes');
 
-			$table->index('client__id', 'communcations_for_client');
+			$table->index('client_id', 'communcations_for_client');
 		});
 	}
 
