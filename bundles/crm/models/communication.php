@@ -24,11 +24,13 @@ class Communication extends \Squire_Model {
 			'label' => 'Date',
 			'form' => false,
 			'display' => false,
+			'accessible' => false,
 		),
 		'updated_at' => array(
 			'label' => 'Last Updated',
 			'form' => false,
 			'display' => false,
+			'accessible' => false,
 		),
 		'datetime' => array(
 			'label'   => 'Date/Time',
@@ -165,10 +167,9 @@ class Communication extends \Squire_Model {
 	public function save()
 	{
 		// Convert the datetime to timestamp
-		if ( ! is_numeric($this->datetime))
+		if ( ! is_a($this->datetime, 'DateTime'))
 		{
-			$date = new DateTime($this->datetime);
-			$this->datetime = $date->getTimestamp();
+			$this->datetime = new DateTime($this->datetime);
 		}
 
 		return parent::save();
