@@ -14,16 +14,15 @@ class Communications_Create_Tables {
 			$table->create();
 
 			$table->increments('id');
-			$table->timestamp('created_at');
-			$table->timestamp('updated_at');
+			$table->timestamps();
 			$table->timestamp('datetime');
 			$table->string('user_id');
-			$table->string('customer_id');
+			$table->string('client_id');
 			$table->integer('type_id');
 			$table->integer('direction_id');
 			$table->text('notes');
 
-			$table->index('customer_id', 'communcations_by_customer');
+			$table->index('client__id', 'communcations_for_client');
 		});
 	}
 

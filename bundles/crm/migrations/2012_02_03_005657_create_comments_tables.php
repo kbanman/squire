@@ -14,13 +14,12 @@ class Comments_Create_Tables {
 			$table->create();
 
 			$table->increments('id');
-			$table->timestamp('created_at');
-			$table->timestamp('updated_at');
-			$table->string('user_id');
-			$table->string('customer_id');
+			$table->timestamps();
+			$table->integer('user_id');
+			$table->integer('client_id');
 			$table->text('comment');
 
-			$table->index('customer_id', 'comments_by_customer');
+			$table->index('client_id', 'comments_for_client');
 		});
 	}
 
