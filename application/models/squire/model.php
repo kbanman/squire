@@ -1,6 +1,6 @@
 <?php
 
-class Squire_Model extends Eloquent\Model {
+class Squire_Model extends Eloquent {
 	
 	/**
 	 * Holds a description of the model's fields
@@ -9,6 +9,22 @@ class Squire_Model extends Eloquent\Model {
 	public static $_properties = array();
 
 	public $validator;
+
+	public function __construct($attributes = array(), $exists = false)
+	{
+		// Dynamically construct the list of accessible properties
+		static::$accessible = array();
+		foreach (static::$_properties as $key => $value)
+		{
+			// Assume accessible by default
+			if ( ! isset($value['accessible']) || $value['accessible'])
+			{
+				static::$accessible[] = $key;
+			}
+		}
+
+		parent::__construct($attributes, $exists);
+	}
 
 	public function properties_display()
 	{
@@ -30,72 +46,79 @@ class Squire_Model extends Eloquent\Model {
 		return $props;
 	}
 
-	public function properties_form()
+	public static function form_fields($form = null)
 	{
 		$props = array();
 
 		foreach (static::$_properties as $prop => $s)
 		{
-			if (isset($s['form']) and $s['form'] === false)
+			// Explicitly-excluded fields
+			if (isset($s['form']) && $s['form'] === false)
 			{
 				continue;
 			}
 
 			$field = isset($s['form']) ? $s['form'] : array();
-			$attr = isset($field['attr']) ? $field['attr'] : array();
-			$type = isset($field['type']) ? $field['type'] : 'text';
+			empty($field['label_attr']) && $field['label_attr'] = array();
+			isset($field['label_attr']['class']) || $field['label_attr']['class'] = array();
+			empty($field['field_attr']) && $field['field_attr'] = array();
+			isset($field['field_attr']['class']) || $field['field_attr']['class'] = array();
+			empty($field['type']) && $field['type'] = 'text';
+			isset($field['name']) || $field['name'] = $prop;
 
-			! isset($s['label']) and $s['label'] = ucfirst(str_replace('_', ' ', $prop));
-			$label = ($type == 'hidden') ? null : Form::label($prop, $s['label']);
-
-			$value = $this->value($prop);
-
-			$args = array($prop, $value);
-			if ($type == 'select')
+			isset($s['label']) && $field['label'] = $s['label'];
+			
+			// This might not be necessary (I think Squi\Form does this)
+			if (isset($form) && is_a($form->instance, 'Squire\\Model'))
 			{
-				$args[] = $this->get_options($prop);
+				$field['value'] = $form->instance->value($prop);
+			}
+
+			// Add potentially dynamic options for <select> fields
+			($field['type'] == 'select') && $field['options'] = static::get_options($prop);
+
+			// Convert data- attributes to faux json
+			foreach ($field['field_attr'] as $key => &$value)
+			{
+				if (strpos($key, 'data') !== 0 || ! is_array($value)) continue;
+
+				// @todo: converting all double quotes to single quotes could easily
+				// mangle valid json, so this should be done another way,
+				// possibly using the JSON_HEX_QUOT flag?
+				$value = str_replace('"', '\'', json_encode($value));
 			}
 
 			// Add attributes and client-side validation classes
-			if (isset($s['validation']) or ! empty($attr))
+			if (isset($s['validation']))
 			{
-				! isset($attr['class']) and $attr['class'] = '';
-				$val = array();
+				$classes = array();
 
-				// If data-validation is explicitly specified, stick with that.
-				if ( ! empty($s['validation']) and empty($attr['data-validation']))
+				if (array_search('required', $s['validation']) !== false)
 				{
-					$val = $s['validation'];
-				}
-				elseif( ! empty($attr['data-validation']))
-				{
-					$val = $attr['data-validation'];
+					$classes[] = 'required';
+					$field['field_attr']['required'] = 'required';
 				}
 
-				$attr['data-validation'] = json_encode($val);
-
-				(array_search('required', $val) !== false) and $attr['class'] .= ' required';
-
-				$args[] = $attr;
+				if (count($classes))
+				{
+					append_class($field['field_attr']['class'], $classes, true);
+					append_class($field['label_attr']['class'], $classes, true);
+				}
 			}
 
-			$markup = call_user_func_array(array('Form', $type), $args);
-
-			$props[$prop] = array(
-				'label' => $label,
-				'field' => $markup,
-			);
+			$props[$prop] = $field;
 		}
 
 		return $props;
 	}
 
+	// Maybe deprecated
 	public static function label($prop)
 	{
 		extract(static::$_properties[$prop]);
 
 		$label = isset($label) ? $label : ucfirst(str_replace('_', ' ', $prop));
-		is_callable($label) and $label = $label($this);
+		is_callable($label) && $label = $label($this);
 		return $label;
 	}
 
@@ -106,7 +129,7 @@ class Squire_Model extends Eloquent\Model {
 		// Options list
 		if (isset($form['type']) and $form['type'] == 'select')
 		{
-			return $this->get_options($prop, $this->$prop);
+			return static::get_options($prop, $this->$prop);
 		}
 		elseif (isset($display) and is_callable($display))
 		{
@@ -122,7 +145,7 @@ class Squire_Model extends Eloquent\Model {
 	 *
 	 * If $where_value is specified, only the corresponding label is returned
 	 */
-	protected function get_options($prop, $where_value = null)
+	protected static function get_options($prop, $where_value = null)
 	{
 		extract(static::$_properties[$prop]);
 
@@ -141,27 +164,22 @@ class Squire_Model extends Eloquent\Model {
 			'value_field' => 'value',
 			'where' => array(),
 		);
-		! is_array($options_table) and $options_table = array('table' => $options_table);
+		! is_array($options_table) && $options_table = array('table' => $options_table);
 		$config = array_merge($config, $options_table);
 
+		$query = DB::table($config['table']);
+
 		// If $where_value is specified, restrict results to that record
-		! is_null($where_value) and $config['where'][$config['value_field']] = $where_value;
+		! is_null($where_value) && $query->where($config['value_field'], '=', $where_value);
 
 		// Build the WHERE clause
-		$where = '';
-		if (count($config['where']))
+		foreach ($config['where'] as $field => $value)
 		{
-			foreach ($config['where'] as $field => &$value)
-			{
-				$value = sprintf("% = '%s'", $field, $value);
-			}
-			$where = ' WHERE '.implode(' AND ', $config['where']);
+			$query->where($field, '=', $value);
 		}
 
-		$result = DB::query(sprintf("SELECT * FROM %s%s", $config['table'], $where));
-
-		$options = array();
-		foreach ($result as $opt)
+		// Fetch and process result
+		foreach ($query->get() as $opt)
 		{
 			$options[$opt->{$config['value_field']}] = $opt->{$config['label_field']};
 		}
@@ -193,40 +211,41 @@ class Squire_Model extends Eloquent\Model {
 			->with('attr', $attr);
 	}
 
-	public static function table_columns($cols = array())
+	public static function table_columns($table = null)
 	{
-		if (empty($cols))
+		$cols = array();
+		foreach (static::$_properties as $prop => $s)
 		{
-			$cols = array();
-			foreach (static::$_properties as $prop => $s)
-			{
-				if (isset($s['display']) and $s['display'] === false) continue;
-				$cols[] = $prop;
-			}
+			if (isset($s['display']) and $s['display'] === false) continue;
+
+			$col = isset($s['form']) ? $s['form'] : array();
+
+			isset($s['label']) && $col['heading'] = $s['label'];
+
+			isset($col['heading_attr']) || $col['heading_attr'] = array();
+			isset($col['heading_attr']['class']) || $col['heading_attr']['class'] = array();
+			append_class($col['heading_attr']['class'], static::weight_class($prop), true);
+
+			isset($col['cell_attr']) || $col['cell_attr'] = array();
+			isset($col['cell_attr']['class']) || $col['cell_attr']['class'] = array();
+			append_class($col['cell_attr']['class'], static::weight_class($prop), true);
+
+			$cols[$prop] = $col;
 		}
 
-		$columns = array();
-		foreach ($cols as $col)
-		{
-			$columns[$col] = static::label($col);
-		}
-		return $columns;
+		return $cols;
 	}
 
-	public static function weight_class($property)
+	public static function weight_class($column)
 	{
-		$weight = isset(static::$_properties[$property]['weight']) ? static::$_properties[$property]['weight'] : 'normal';
+		$weight = 'normal';
+
+		if (isset(static::$_properties[$column]['weight']))
+		{
+			$weight = static::$_properties[$column]['weight'];
+		}
+		
 		return 'weight-'.$weight;
-	}
-
-	public function populate($input = array())
-	{
-		$input = (array) $input;
-		foreach ($input as $prop => $value)
-		{
-			if ( ! array_key_exists($prop, static::$_properties)) continue;
-			$this->$prop = $value;
-		}
 	}
 
 	public function validate()
@@ -263,7 +282,7 @@ class Squire_Model extends Eloquent\Model {
 			if ( ! isset($s['validation'])) continue;
 			$rules[$prop] = $s['validation'];
 		}
-		return $this->validator = Validator::make($this->dirty, $rules);
+		return $this->validator = Validator::make($this->attributes, $rules);
 	}
 
 }

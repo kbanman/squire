@@ -16,7 +16,7 @@ return array(
 	|
 	*/
 
-	'driver' => 'eloquent',
+	'driver' => 'sentry',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -42,7 +42,7 @@ return array(
 	|
 	*/
 
-	'model' => 'User',
+	'model' => 'Sentry\Sentry_User',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -56,5 +56,18 @@ return array(
 	*/
 
 	'table' => 'users',
+
+	/*
+	|--------------------------------------------------------------------------
+	| Sentry Config
+	|--------------------------------------------------------------------------
+	|
+	| These parameters apply only to the Sentry authentication bundle.
+	|
+	*/
+	'sentry' => array(
+		'suspend' => false,		// Enable user suspension
+		'db_instance' => null,	// Default driver
+	),
 
 );

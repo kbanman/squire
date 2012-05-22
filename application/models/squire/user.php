@@ -2,6 +2,7 @@
 
 class Squire_User extends Squire_Model {
 
+	public static $table = 'users';
 	public static $primary_key = 'user_id';
 	
 	public static $_properties = array(

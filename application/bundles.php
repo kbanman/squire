@@ -38,4 +38,5 @@ return array(
 	'anbu' => array('auto' => true),
 	'crm' => array('auto' => true),
 	'docs' => array('handles' => 'docs'),
+	'sentry' => array('auto' => true),
 );

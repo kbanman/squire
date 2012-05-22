@@ -31,6 +31,12 @@ class HTML {
 	 */
 	public static function entities($value)
 	{
+		/* for debugging
+		if ( ! is_string($value))
+		{
+			var_dump($value);
+			die('Invalid value passed to HTML::entities()');
+		}*/
 		return htmlentities($value, ENT_QUOTES, Config::get('application.encoding'), false);
 	}
 

@@ -12,8 +12,7 @@ function empty(v) {
 }
 
 var Sq = {
-	base_url: '<?php echo $base_url; ?>',
+	base_url: '<?php echo URL::to('/'); ?>',
 	site_url: function(uri) { return this.base_url + uri; },
-	entities: <?php echo json_encode($entities); ?>
 };
 </script>

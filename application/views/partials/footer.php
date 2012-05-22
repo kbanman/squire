@@ -1,4 +1,4 @@
-<hr />
+<!--<hr />
 		<footer>
 			<?php echo $content; ?>
-		</footer>
+		</footer>-->

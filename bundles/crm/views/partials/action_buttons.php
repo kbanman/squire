@@ -1,0 +1,1 @@
+<a class="btn" href="<?php echo URL::to('customers/new'); ?>">New Customer</a>

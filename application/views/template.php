@@ -6,6 +6,8 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="description" content="">
 		<meta name="author" content="">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
 
 		<link href="<?php echo URL::to_asset('bootstrap/css/bootstrap-mod.css'); ?>" rel="stylesheet">
 
@@ -17,10 +19,18 @@
 			.sidebar-nav {
 				padding: 9px 0;
 			}
+			.nav .sub {
+				display: none;
+			}
+			#search-results {
+				display: none;
+			}
 		</style>
 <?php if ($responsive): ?>
 		<link href="<?php echo URL::to_asset('bootstrap/css/responsive.css'); ?>" rel="stylesheet">
 <?php endif; ?>
+		<link href="<?php echo URL::to_asset('jquery-ui-bootstrap/css/custom-theme/jquery-ui-1.8.16.custom.css'); ?>" rel="stylesheet">
+		<link href="<?php echo URL::to_asset('css/squire.css'); ?>" rel="stylesheet">
 
 		<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
 		<!--[if lt IE 9]>
@@ -32,10 +42,10 @@
 		<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
 		<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
 		<link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">-->
+		<?php echo View::make('partials.sq_js'); ?>
 	</head>
 
 	<body>
-
 		<div class="navbar navbar-fixed-top">
 			<div class="navbar-inner">
 				<div class="container<?php if ($fluid) echo '-fluid'; ?>">
@@ -44,7 +54,7 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</a>
-					<a class="brand" href="#"><?php echo $sitename; ?></a>
+					<a class="brand" href="<?php echo URL::to('/'); ?>"><?php echo $site_name; ?></a>
 					<div class="nav-collapse">
 						<ul class="nav">
 							<?php echo Section::yield('nav'); ?>
@@ -57,29 +67,29 @@
 
 		<div class="container<?php if ($fluid) echo '-fluid'; ?>">
 			<?php if (isset($layout)): include "layout/{$layout}.php"; else: ?>
+			<?php if ( ! empty($page_heading)): ?><h1><?php echo $page_heading; ?></h1><?php endif; ?>
 			<?php echo $content.Section::yield('content'); ?>
 			<?php endif; ?>
 
 			<footer>
 				<?php echo $footer; ?>
+				<?php if (Auth::check()): ?>
+				Logged in as <?php echo Auth::user()->email; ?>. <?php echo HTML::link('login/logout', 'Logout'); ?>
+				<?php endif; ?>
 			</footer>
 
 		</div><!--/.fluid-container-->
 
+		<?php echo Asset::container('footer')->scripts(); ?>
+
 		<script src="<?php echo URL::to_asset('js/jquery.min.js'); ?>"></script>
 		<script src="<?php echo URL::to_asset('js/jquery-ui.min.js'); ?>"></script>
-		<script src="<?php echo URL::to_asset('bootstrap/js/bootstrap-transition.js'); ?>"></script>
-		<script src="<?php echo URL::to_asset('bootstrap/js/bootstrap-alert.js'); ?>"></script>
-		<script src="<?php echo URL::to_asset('bootstrap/js/bootstrap-modal.js'); ?>"></script>
-		<script src="<?php echo URL::to_asset('bootstrap/js/bootstrap-dropdown.js'); ?>"></script>
-		<script src="<?php echo URL::to_asset('bootstrap/js/bootstrap-scrollspy.js'); ?>"></script>
-		<script src="<?php echo URL::to_asset('bootstrap/js/bootstrap-tab.js'); ?>"></script>
-		<script src="<?php echo URL::to_asset('bootstrap/js/bootstrap-tooltip.js'); ?>"></script>
-		<script src="<?php echo URL::to_asset('bootstrap/js/bootstrap-popover.js'); ?>"></script>
-		<script src="<?php echo URL::to_asset('bootstrap/js/bootstrap-button.js'); ?>"></script>
-		<script src="<?php echo URL::to_asset('bootstrap/js/bootstrap-collapse.js'); ?>"></script>
-		<script src="<?php echo URL::to_asset('bootstrap/js/bootstrap-carousel.js'); ?>"></script>
-		<script src="<?php echo URL::to_asset('bootstrap/js/bootstrap-typeahead.js'); ?>"></script>
+		<script src="<?php echo URL::to_asset('js/jquery-ui-timepicker.js'); ?>"></script>
+		<script src="<?php echo URL::to_asset('js/jquery-validation.js'); ?>"></script>
+		<script src="<?php echo URL::to_asset('js/jquery-validation-methods.min.js'); ?>"></script>
+		<script src="<?php echo URL::to_asset('bootstrap/js/bootstrap.min.js'); ?>"></script>
+		<script src="<?php echo URL::to_asset('js/squire.js'); ?>"></script>
 
+		<?php Anbu::render(); ?>
 	</body>
 </html>

@@ -1,5 +1,12 @@
 <?php
 
+// Debug helper
+function last_query()
+{
+	$queries = DB::profile();
+	return $queries[count($queries)-1]['sql'];
+}
+
 /*
 |--------------------------------------------------------------------------
 | PHP Display Errors Configuration
@@ -60,6 +67,7 @@ Laravel\Autoloader::$aliases = $aliases;
 
 Autoloader::map(array(
 	'Base_Controller' => path('app').'controllers/base.php',
+	'Protected_Controller' => path('app').'controllers/protected.php',
 ));
 
 /*
@@ -172,6 +180,16 @@ if ( ! Request::cli() and Config::get('session.driver') !== '')
 	Session::load();
 }
 
+// Html helper
+function append_class(&$existing, $new, $stringify = false)
+{
+	is_array($existing) || $existing = explode(' ', $existing);
+	is_array($new) || $new = explode(' ', $new);
+	$existing = array_merge($existing, $new);
+
+	$stringify && $existing = implode(' ', $existing);
+}
+
 /*
 |--------------------------------------------------------------------------
 | Register composers
@@ -192,3 +210,16 @@ foreach ($composers as $id => $composer)
 	}
 	View::composer($id, $composer);
 }
+
+Route::controller('login');
+
+Validator::register('datetime', function($attribute, $value, $parameters)
+{
+	try {
+		$date = new DateTime($value);
+		return $date->getTimestamp() > 0;
+	} catch(Exception $e) {}
+	
+	return false;
+});
+

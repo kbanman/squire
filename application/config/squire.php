@@ -27,14 +27,12 @@ return array(
 		*/
 	),
 
-	/*
 	'search' => array(
 		'uri' => 'search',
 		'name' => 'q',
 		'method' => 'GET',
 		'placeholder' => 'Search',
 	),
-	*/
 
 	'footer_content' => '<p>Powered by Squire</p>',
 

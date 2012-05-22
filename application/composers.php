@@ -3,7 +3,7 @@
 return array(
 
 	// Main template
-	'template' => function($view)
+	'template' => array('name' => 'template', function($view)
 	{
 		$config = Config::get('squire');
 
@@ -23,6 +23,7 @@ return array(
 		Asset::add('bootstrap-js-button', 'bootstrap/js/bootstrap-button.js');
 		Asset::add('bootstrap-js-modal', 'bootstrap/js/bootstrap-modal.js');
 		Asset::add('bootstrap-js-typeahead', 'bootstrap/js/bootstrap-typeahead.js');
+		Asset::add('squire-js', 'js/squire.js');
 
 		// Add the default values from config
 		foreach ($config as $var => $value)
@@ -44,7 +45,7 @@ return array(
 		$view->nav = View::make('partials.nav')->with('items', $view->nav);
 
 		// Search form
-		if (empty($view->search) and ! empty($config['search']))
+		if ( ! empty($config['search']))
 		{
 			$view->search = View::make('partials.search', $config['search']);
 		}
@@ -58,7 +59,7 @@ return array(
 
 		// Footer
 		! isset($view->footer) and $view->footer = View::make('partials.footer')->with('content', $config['footer_content']);
-	},
+	}),
 
 	// Nav
 	'partials.nav' => function($view)
@@ -143,11 +144,11 @@ return array(
 		$view->items = $items;
 	}),
 
-	'partials.sq_js' => array('name' => 'sq_js', function($view)
+	'partials.sq_js' => function($view)
 	{
 		$view->base_url = URL::to('/');
 		$view->entities = array();
-	}),
+	},
 
 	'partials.table' => array('name' => 'table', function($view)
 	{
@@ -160,7 +161,7 @@ return array(
 			'row_attributes' => function($row){ return array(); },
 			'cell_attributes' => function($column, $row){ return array(); },
 			'cell_value' => function($column, $row){ 
-				if (is_a($row, Squiremodel))
+				if (is_a($row, 'Squire_Model'))
 				{
 					return $row->value($column);
 				}
