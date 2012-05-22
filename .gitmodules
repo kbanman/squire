@@ -1,0 +1,6 @@
+[submodule "bundles/squi"]
+	path = bundles/squi
+	url = git@github.com:kbanman/laravel-squi
+[submodule "bundles/sentry"]
+	path = bundles/sentry
+	url = git@github.com:kbanman/sentry-laravel
