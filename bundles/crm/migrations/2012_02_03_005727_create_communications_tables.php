@@ -1,6 +1,6 @@
 <?php
 
-class Communications_Create_Tables {
+class Crm_Create_Communications_Tables {
 
 	/**
 	 * Make changes to the database.

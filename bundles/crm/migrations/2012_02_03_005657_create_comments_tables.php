@@ -1,6 +1,6 @@
 <?php
 
-class Comments_Create_Tables {
+class Crm_Create_Comments_Tables {
 
 	/**
 	 * Make changes to the database.
