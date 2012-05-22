@@ -36,13 +36,19 @@ class Login_Controller extends Base_Controller {
 
 	public function get_create()
 	{
-		return 'already done';
-		$user = Auth::retrieve();
+		$user = new Sentry\Sentry_User;
 
-		$result = $user->register(array(
-			'email' => 'kelly.banman@gmail.com',
-			'password' => 'password',
-		));
+		try
+		{
+			$result = $user->register(array(
+				'email' => 'admin@admin.com',
+				'password' => 'password',
+			));
+		}
+		catch (Exception $e)
+		{
+			die('Already done');
+		}
 
 	}
 
