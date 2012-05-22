@@ -1,4 +1,4 @@
-<?php namespace Crm;
+<?php namespace Crm; use \DateTime;
 
 class Communication extends \Squire_Model {
 
@@ -117,7 +117,7 @@ class Communication extends \Squire_Model {
 
 			try
 			{
-				$date = new \DateTime($comm->datetime);
+				$date = new DateTime($comm->datetime);
 			}
 			catch (\Exception $e)
 			{
@@ -157,7 +157,7 @@ class Communication extends \Squire_Model {
 
 	public static function columns_panel()
 	{
-		return static::table_columns(array(
+		return static::table_columns(null, array(
 			'datetime', 'user_id', 'type', 'notes'
 		));
 	}
@@ -167,7 +167,7 @@ class Communication extends \Squire_Model {
 		// Convert the datetime to timestamp
 		if ( ! is_numeric($this->datetime))
 		{
-			$date = new \DateTime($this->datetime);
+			$date = new DateTime($this->datetime);
 			$this->datetime = $date->getTimestamp();
 		}
 

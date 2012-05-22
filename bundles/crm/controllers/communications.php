@@ -24,9 +24,8 @@ class Crm_Communications_Controller extends \Protected_Controller {
 			->order_by('datetime', 'desc')
 			->get();
 		
-		$table = View::of('table')
-			->with('columns', Communication::columns_panel())
-			->with('rows', $calls);
+		$table = Squi\Table::horizontal(Communication::columns_panel(), $calls)
+			->with('class', array('table', 'table-compact'));
 
 		$buttons = array(
 			'<i class="icon-plus"></i> New Communication' => array(

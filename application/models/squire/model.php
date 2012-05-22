@@ -211,10 +211,15 @@ class Squire_Model extends Eloquent {
 			->with('attr', $attr);
 	}
 
-	public static function table_columns($table = null)
+	public static function table_columns($table = null, $restrict = false)
 	{
 		$cols = array();
-		foreach (static::$_properties as $prop => $s)
+
+		$props = is_array($restrict)
+			? array_only(static::$_properties, $restrict)
+			: static::$_properties;
+
+		foreach ($props as $prop => $s)
 		{
 			if (isset($s['display']) and $s['display'] === false) continue;
 
@@ -229,6 +234,11 @@ class Squire_Model extends Eloquent {
 			isset($col['cell_attr']) || $col['cell_attr'] = array();
 			isset($col['cell_attr']['class']) || $col['cell_attr']['class'] = array();
 			append_class($col['cell_attr']['class'], static::weight_class($prop), true);
+
+			if (isset($s['display']) && is_callable($s['display']))
+			{
+				$col['value'] = $s['display'];
+			}
 
 			$cols[$prop] = $col;
 		}
