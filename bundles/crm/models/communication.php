@@ -161,4 +161,16 @@ class Communication extends \Squire_Model {
 			'datetime', 'user_id', 'type', 'notes'
 		));
 	}
+
+	public function save()
+	{
+		// Convert the datetime to timestamp
+		if ( ! is_numeric($this->datetime))
+		{
+			$date = new \DateTime($this->datetime);
+			$this->datetime = $date->getTimestamp();
+		}
+
+		return parent::save();
+	}
 }

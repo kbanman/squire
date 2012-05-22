@@ -25,6 +25,10 @@ Route::post('clients/(:num)/communication', function($client_id)
 {
 	return Route::forward('post', 'communications/form/'.$client_id);
 });
+Route::get('clients/(:num)/communications', function($client_id)
+{
+	return Route::forward('get', 'communications/for_client/'.$client_id);
+});
 Route::controller(array('crm::clients', 'crm::communications', 'crm::comments'));
 
 

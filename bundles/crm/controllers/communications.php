@@ -116,6 +116,8 @@ class Crm_Communications_Controller extends \Protected_Controller {
 			// Validate and save
 			if ($success = $comm->validate())
 			{
+				// Convert the date to a timestamp
+				// @todo: this could be done a much better way
 				if ( ! $success = $comm->save())
 				{
 					$status = 500;
@@ -163,11 +165,7 @@ class Crm_Communications_Controller extends \Protected_Controller {
 			($status == 500) and $errors->add('server', reset($errors));
 		}
 
-		$key = 'http_referer';
-		var_dump(strtoupper($key));
-		//$redirect = array_get($_SERVER, strtoupper($key), null);
-		$redirect = Request::server($key);
-		dd($redirect);
+		$redirect = array_get($_SERVER, 'HTTP_REFERER', null);
 		if (empty($redirect))
 		{
 			var_dump($errors);
