@@ -22,14 +22,13 @@ class Crm_Comments_Controller extends \Protected_Controller {
 
 		// Get us some comments
 		$comments = Comment::with('user')
-			->where('entity', '=', 'Crm\\Client')
-			->where('entity_id', '=', $client->id)
+			->where('client_id', '=', $client->id)
 			->order_by('created_at', 'desc')
 			->get();
 
 		$panel = View::make('crm::comments')
-			->with('id', 'customer_comments')
-			->with('uri', 'customers/'.$client->id.'/comments')
+			->with('id', 'client_comments')
+			->with('uri', 'clients/'.$client->id.'/comments')
 			->with('client', $client)
 			->with('comments', $comments);
 
@@ -41,15 +40,18 @@ class Crm_Comments_Controller extends \Protected_Controller {
 	 */
 	public function post_comment()
 	{
+		// Detect the referrer for non-ajax redirection
+		$redirect = Input::get('redirect_uri', Request::server('http_referer'));
+
 		$comment = new Comment;
 
 		$comment->fill(Input::all());
 
 		// Require a valid user
-		/*if ( ! $comment->user_id = @Auth::user()->id)
+		if ( ! $comment->user_id = Auth::user()->id)
 		{
-			return Response::error(404, array('You must be logged in to post a comment.'));
-		}*/
+			return Response::error(401, array('You must be logged in to post a comment.'));
+		}
 
 		// And a valid Client ID
 		if ( ! $client = Client::find($comment->client_id))
@@ -58,38 +60,48 @@ class Crm_Comments_Controller extends \Protected_Controller {
 		}
 
 		// Validate
-		/*
-		if ( ! $success = $comment->validate())
+		if ( ! $comment->validate())
 		{
-			return Response::error('400', array(
-				'errors' => $comment->validation_errors()
-			));
+			if (Request::ajax())
+			{
+				return Response::make(json_encode(array(
+					'status' => 'error',
+					'errors' => $comment->validation_errors(),
+				)), 400);
+			}
+
+			return Redirect::to($redirect)->with('errors', $comment->validation_errors());
 		}
-		*/
 
 		// Save
-		if ( ! $success = $comment->save())
+		if ( ! $comment->save())
 		{
-			return Response::error('500', 'Error saving to database');
+			if (Request::ajax())
+			{
+				return Response::make(json_encode(array(
+					'status' => 'error',
+					'errors' => 'Error saving to database',
+				)), 500);
+			}
+
+			return Redirect::to($redirect)->with('errors', array('Error saving to database'));
 		}
 
-		// Ajax response
+		// Success
 		if (Request::ajax())
 		{
 			$data = array(
 				'status' => 'success',
 				'message' => 'Saved comment successfully',
-				'reload_panel' => 'entity_comments',
+				'reload_panel' => 'client_comments',
+				'comment' => $comment->to_array(),
+				'user' => $comment->to_array(),
 			);
 			return Response::make(json_encode($data));
 		}
 
 		// HTML response
-		Session::flash('success', 'Saved comment successfully');
-
-		// Redirect back to whence you came
-		$redirect = Input::get('redirect_uri', Request::server('http_referrer'));
-		return Redirect::to($redirect);
+		return Redirect::to($redirect)->with('message', 'Saved comment successfully');
 	}
 	
 }

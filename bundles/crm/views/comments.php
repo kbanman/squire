@@ -5,7 +5,7 @@
 		<div class="comment">
 			<div class="meta">
 				<span class="author"><?php echo $comment->user->name; ?></span>
-				<span class="date"><?php echo DateTime::createFromFormat(PG_TIMESTAMP, $comment->created_at)->format('d-M-Y g:i a'); ?></span>
+				<span class="date"><?php $date = new DateTime($comment->created_at); echo $date->format('d-M-Y g:i a'); ?></span>
 			</div>
 			<div class="body">
 				<?php echo nl2br($comment->comment); ?>
@@ -16,7 +16,7 @@
 	<p>No comments</p>
 	<?php endif; ?>
 	<hr style="margin: 8px 0;"/>
-	<form class="form form-horizontal crm-comment-form" id="customer_comment_form" action="<?php echo URL::to('comments/comment'); ?>" method="post">
+	<form class="form form-horizontal crm-comment-form" id="client_comment_form" action="<?php echo URL::to('comments/comment'); ?>" method="post">
 		<fieldset>
 			<?php echo Form::hidden('redirect_uri', URI::current()); ?>
 			<?php echo Form::hidden('client_id', $client->id); ?>
