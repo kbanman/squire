@@ -44,10 +44,11 @@ class Login_Controller extends Base_Controller {
 				'email' => 'admin@admin.com',
 				'password' => 'password',
 			));
+			echo 'Created user "admin@admin.com" with password "password"';
 		}
 		catch (Exception $e)
 		{
-			die('Already done');
+			die($e->getMessage());
 		}
 
 	}
