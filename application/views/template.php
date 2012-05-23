@@ -31,7 +31,8 @@
 <?php endif; ?>
 		<link href="<?php echo URL::to_asset('jquery-ui-bootstrap/css/custom-theme/jquery-ui-1.8.16.custom.css'); ?>" rel="stylesheet">
 		<link href="<?php echo URL::to_asset('css/squire.css'); ?>" rel="stylesheet">
-
+		<?php echo Asset::container('header')->styles(); ?>
+		
 		<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
 		<!--[if lt IE 9]>
 			<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -80,7 +81,6 @@
 
 		</div><!--/.fluid-container-->
 
-		<?php echo Asset::container('footer')->scripts(); ?>
 
 		<script src="<?php echo URL::to_asset('js/jquery.min.js'); ?>"></script>
 		<script src="<?php echo URL::to_asset('js/jquery-ui.min.js'); ?>"></script>
@@ -88,6 +88,7 @@
 		<script src="<?php echo URL::to_asset('js/jquery-validation.js'); ?>"></script>
 		<script src="<?php echo URL::to_asset('js/jquery-validation-methods.min.js'); ?>"></script>
 		<script src="<?php echo URL::to_asset('bootstrap/js/bootstrap.min.js'); ?>"></script>
+		<?php echo Asset::container('footer')->scripts(); ?>
 		<script src="<?php echo URL::to_asset('js/squire.js'); ?>"></script>
 
 		<?php Anbu::render(); ?>
