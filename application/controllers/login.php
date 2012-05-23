@@ -40,10 +40,10 @@ class Login_Controller extends Base_Controller {
 
 		try
 		{
-			$result = $user->register(array(
+			$result = $user->create(array(
 				'email' => 'admin@admin.com',
 				'password' => 'password',
-			));
+			), false);
 			echo 'Created user "admin@admin.com" with password "password"';
 		}
 		catch (Exception $e)
