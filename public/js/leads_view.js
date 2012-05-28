@@ -25,7 +25,7 @@ $(document).ready(function() {
 	$('#btn_leads_detail_save').live('click', function(e) {
 		var leadID = $('#panel_leads_view_details').data('leadid');
 		var $form = $('#leaddetails_editing');
-		$.post(SITE_URL + 'leads/editLead/' + leadID, $form.serialize(), function(response) {
+		$.post(Sq.base_url + 'leads/editLead/' + leadID, $form.serialize(), function(response) {
 			if (typeof(response) != 'object') {
 				return alert('Unknown error saving lead details');
 			}
@@ -93,7 +93,7 @@ function showLeadDetails(leadID)
 	var $detailPanel = $('#panel_leads_view_details').empty().append('<h3>Loading</h3>').data('leadid', leadID);
 	
 	// Send off the request
-	$.post(SITE_URL + 'leads/getDetails/' + leadID, function(response) {
+	$.post(Sq.base_url + 'leads/getDetails/' + leadID, function(response) {
 		if (typeof(response) == 'object') {
 			$detailPanel.append('<p>'+response.message+'</p>');
 			$('h3',$detailPanel).text('Ajax Error');
@@ -142,7 +142,7 @@ function codeAddress(address)
 function editLead(callback_load)
 {
 	var leadID = $('#panel_leads_view_details').data('leadid');
-	$.get(SITE_URL + 'leads/getEditForm/' + leadID, function(response) {
+	$.get(Sq.base_url + 'leads/getEditForm/' + leadID, function(response) {
 		// Hide static details, show edit form
 		var $staticTable = $('.leaddetails').hide().after(response);
 		// Hide edit button, show Cancel
@@ -163,7 +163,7 @@ function editLead(callback_load)
 
 function deleteLead(leadID)
 {
-	$.post(SITE_URL + 'leads/deleteLead', {	'leadID':leadID	}, function(response) {
+	$.post(Sq.base_url + 'leads/deleteLead', {	'leadID':leadID	}, function(response) {
 		if (typeof(response) == 'object' && response.status == 'success') {
 			$('.leadrow:data(leadid,'+leadID+')').remove();
 			$('#panel_leads_view_details').html('<h3 style="margin-top:.7em;">Select a lead for more details</h3>');
@@ -176,7 +176,7 @@ function deleteLead(leadID)
 function reverseAddress()
 {
 	var address = $('#leaddetails_editing').length? $('input#address_street').val() : $('span#address_street').text();
-	$('#wp_result_container').load(SITE_URL + 'leads/reverseAddress/' + escape(address.replace('/',' ')),function(){
+	$('#wp_result_container').load(Sq.base_url + 'leads/reverseAddress/' + escape(address.replace('/',' ')),function(){
 		$(this).slideDown();
 	});
 }
@@ -184,7 +184,7 @@ function reverseAddress()
 function reversePhone()
 {
 	var phone = $('#leaddetails_editing').length? $('input#phone_home').val() : $('span#phone_home').text();
-	$('#wp_result_container').load(SITE_URL + 'leads/reversePhone/' + phone.replace(/\D/g,''),function(){
+	$('#wp_result_container').load(Sq.base_url + 'leads/reversePhone/' + phone.replace(/\D/g,''),function(){
 		$(this).slideDown();
 	});
 }
@@ -230,7 +230,7 @@ function saveToCpower()
 	var leadID = $('#panel_leads_view_details').data('leadid');
 	if (!leadID || $('#btn_savetocpower').hasClass('disabled')) return false;
 	if (!confirm('Are you sure? This action cannot be undone')) return false;
-	$.post(SITE_URL + 'opencpro/addLead/' + leadID, function(response) {
+	$.post(Sq.base_url + 'opencpro/addLead/' + leadID, function(response) {
 		if (typeof(response) != 'object') {
 			return alert('An unknown error occurred. Please report this.');
 		}
@@ -253,7 +253,7 @@ function deleteSubmission(e)
 	var $button = $(this);
 	if ( ! confirm('Are you sure? This will affect payroll calculation, and cannot be undone')) return false;
 	var submissionID = $button.data('submissionid');
-	$.post(SITE_URL + 'leads/deleteSubmission', { submission_id: submissionID }, function(response){
+	$.post(Sq.base_url + 'leads/deleteSubmission', { submission_id: submissionID }, function(response){
 		if (typeof response != 'object') {
 			return alert(response);
 		}
@@ -269,7 +269,7 @@ function saveToCpower()
 	var leadID = $('#panel_leads_view_details').data('leadid');
 	if (!leadID || $('#btn_savetocpower').hasClass('disabled')) return false;
 	if (!confirm('Are you sure? This action cannot be undone')) return false;
-	$.post(SITE_URL + 'opencpro/addLead/' + leadID, function(response) {
+	$.post(Sq.base_url + 'opencpro/addLead/' + leadID, function(response) {
 		if (typeof(response) != 'object') {
 			return alert('An unknown error occurred. Please report this.');
 		}

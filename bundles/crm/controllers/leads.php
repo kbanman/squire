@@ -47,8 +47,8 @@ class Crm_Leads_Controller extends \Protected_Controller {
 			->with('row_attr', function($client)
 			{
 				return array(
-					'class' => 'clickable leadrow',
-					'data-leadid' => $client->id
+					'class'       => 'clickable leadrow',
+					'data-leadid' => $client->id,
 				);
 			})
 			->with('class', array('table', 'table-condensed'));
@@ -67,6 +67,11 @@ class Crm_Leads_Controller extends \Protected_Controller {
 	}
 	
 	public function post_getDetails($lead_id = null) {
+		
+			if(Request::ajax()) {
+				return View::make('partials.leads.details')
+						->with('lead_id',$lead_id);
+			}
 
 	}
 	

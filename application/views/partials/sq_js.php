@@ -14,5 +14,6 @@ function empty(v) {
 var Sq = {
 	base_url: '<?php echo URL::to('/'); ?>',
 	site_url: function(uri) { return this.base_url + uri; },
+	uri_string: '<?= URI::segment(1) .'/'. URI::segment(2,'') ?>'
 };
 </script>

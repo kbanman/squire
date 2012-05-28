@@ -85,9 +85,6 @@
 			var Quill = {
 				navtimers: []
 			};
-			var SITE_URL = 'http://squire.dev/'
-			var ASSETS_URL = 'http://squire.dev/assets/';
-			var URI_STRING = 'leads/';
 			
 		</script>
 		<script src="<?php echo URL::to_asset('js/jquery.min.js'); ?>"></script>

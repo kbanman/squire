@@ -28,7 +28,7 @@ function showModalPopup(sel, data, size)
 		$('#modalwindow').data('popup', data);
 	}
 	if (sel) {
-		$('#modalwindow').load(SITE_URL + 'modal/popup/' + sel, function() {
+		$('#modalwindow').load(Sq.base_url + 'modal/popup/' + sel, function() {
 			$(this).fadeIn(100);
 		}).addClass(sel).addClass(size);
 	}
@@ -38,7 +38,7 @@ function minisearch(query)
 {
 	if (!query.length) return false;
 	query = query.replace( /[!@#$%^&*()-+]/g, '');
-	$.get(SITE_URL + 'search/mini/' + query, function(response) {
+	$.get(Sq.base_url + 'search/mini/' + query, function(response) {
 		if (typeof(response) != 'object' || !response.data.length) {
 			$('#minisearch_resultlist').text('No results found');
 		}
@@ -98,7 +98,7 @@ function activateNewLeadForm()
 	$form.bind('submit', function(e) {
 		if (!$('#newlead-form').valid()) return false;
 		// Submit via ajax
-		$.post(SITE_URL + 'clientAction/create', 
+		$.post(Sq.base_url + 'clientAction/create', 
 			$('#newlead-form').serialize(), 
 			function(response) {
 				if (!response || !response.status) {
@@ -120,7 +120,7 @@ function activateNewLeadForm()
 					return;
 				}
 				// Success
-				$('.popup.newlead-form').load(SITE_URL + 'modal/popup/newlead-form_success').data('popup', response.data);
+				$('.popup.newlead-form').load(Sq.base_url + 'modal/popup/newlead-form_success').data('popup', response.data);
 			}, 
 			'json'
 		);//post
@@ -158,13 +158,13 @@ function activateNewLeadSuccess()
 	
 	$('.newlead-form.popup .done').click(function(e) {
 		// reload the recent leads list
-		$.get(SITE_URL + 'overview/panel_leads', function(data) {
+		$.get(Sq.base_url + 'overview/panel_leads', function(data) {
 			$('#panel_recent_leads').replaceWith($(data));
 		});
 		hideModalPopup('newlead-form');
 	});
 	$('.newlead-form.popup .addanother').click(function(e) {
-		$('#modalwindow').load(SITE_URL + 'modal/popup/newlead-form');
+		$('#modalwindow').load(Sq.base_url + 'modal/popup/newlead-form');
 	});
 	
 	$('.popup #newlead_enterjob').click(function(e) {
@@ -194,7 +194,7 @@ function activateNewUserForm()
 		e.preventDefault();
 		if (!$form.valid()) return false;
 		// Submit via ajax
-		$.post(SITE_URL + 'administration/newUser', 
+		$.post(Sq.base_url + 'administration/newUser', 
 			$form.serialize(), 
 			function(response) {
 				if (typeof(response) != 'object') {
@@ -206,7 +206,7 @@ function activateNewUserForm()
 					return;
 				}
 				// Success
-				//$form.load(SITE_URL + 'modal/popup/newuser-form_success').data('popup', response.data);
+				//$form.load(Sq.base_url + 'modal/popup/newuser-form_success').data('popup', response.data);
 				hideModalPopup('new_user');
 				reloadUsersList();
 			}, 
@@ -240,7 +240,7 @@ function activateNewMessageForm()
 		e.preventDefault();
 		if (!$form.valid()) return false;
 		// Submit via ajax
-		$.post(SITE_URL + 'messages/post', 
+		$.post(Sq.base_url + 'messages/post', 
 			$form.serialize(), 
 			function(response) {
 				if (typeof(response) != 'object') {
@@ -255,7 +255,7 @@ function activateNewMessageForm()
 				//alert('posted');
 				hideModalPopup('new_message');
 				reloadMessages();
-				//$form.load(SITE_URL + 'modal/popup/newuser-form_success').data('popup', response.data);
+				//$form.load(Sq.base_url + 'modal/popup/newuser-form_success').data('popup', response.data);
 			}, 
 			'json'
 		);//post
@@ -275,7 +275,7 @@ function activateNewMessageForm()
 // Called in context of dashboard
 function reloadMessages()
 {
-	$.get(SITE_URL + 'dashboard/panel_messages', function(data) {
+	$.get(Sq.base_url + 'dashboard/panel_messages', function(data) {
 		$('#panel_messages').replaceWith($(data));
 	});
 }
@@ -283,7 +283,7 @@ function reloadMessages()
 // Called in context of dashboard
 function refreshCPAppointments()
 {
-	$.post(SITE_URL + 'administration/refresh_cp_apps', function(response){
+	$.post(Sq.base_url + 'administration/refresh_cp_apps', function(response){
 		if (typeof(response) != 'object') {
 			return;
 		}
@@ -298,7 +298,7 @@ function refreshCPAppointments()
 
 function reloadAppointmentsPanel()
 {
-	$.get(SITE_URL + 'dashboard/panel_appointments', function(data) {
+	$.get(Sq.base_url + 'dashboard/panel_appointments', function(data) {
 		$('#panel_appointments').replaceWith($(data));
 	});
 }
@@ -309,7 +309,7 @@ function activateFeedbackForm()
 	$form.bind('submit', function(e) {
 		e.preventDefault();
 		// Submit via ajax
-		$.post(SITE_URL + 'help/sendFeedback', 
+		$.post(Sq.base_url + 'help/sendFeedback', 
 			$form.serialize(), 
 			function(response) {
 				if (typeof(response) != 'object') {
@@ -323,7 +323,7 @@ function activateFeedbackForm()
 				// Success
 				//alert('posted');
 				$form.html('<p style="margin:1em; color:#ccc;">Thanks, your input is appreciated. <br />If your query requires a response, you will be contacted via the email on file.<br /></p>');
-				//$form.load(SITE_URL + 'modal/popup/newuser-form_success').data('popup', response.data);
+				//$form.load(Sq.base_url + 'modal/popup/newuser-form_success').data('popup', response.data);
 		});//post
 		
 		return false;
@@ -486,34 +486,34 @@ function zeroPad (num, count) {
 	return numZeropad;
 }
 
-//// Catch any ajax session errors
-//$(document).ajaxError(function(e, request, options, exception) {
-//	// Send kelly an email about it
-//	var debug = {
-//		url: options.url,
-//		type: options.type,
-//		status: request.status,
-//		responseText: request.responseText,
-//		data: options.data,
-//		dataType: options.dataType
-//	};
-//	if (debug.url != SITE_URL + 'map/getLeads' 
-//		 && debug.url != SITE_URL + 'map/getPolylines'
-//		 && debug.url != SITE_URL + 'administration/refresh_cp_apps'
-//		 && debug.url != SITE_URL + 'dashboard/panel_appointments'
-//		 && debug.url != SITE_URL + 'popup/ajax_login') {
-//		$.post(SITE_URL + 'help/sendFeedback', { 'error':true, 'debug':JSON.stringify(debug) });
-//	} else {
-//		return false;
-//	}
-//	
-//	// options.url
-//	if (request.status == 401) {
-//		showModalPopup('ajax_login', options);
-//	} else {
-//		alert('Ajax error. Try refreshing the page, then try again. The site admin have been notified of the error.');
-//	}
-//});
+// Catch any ajax session errors
+$(document).ajaxError(function(e, request, options, exception) {
+	// Send kelly an email about it
+	var debug = {
+		url: options.url,
+		type: options.type,
+		status: request.status,
+		responseText: request.responseText,
+		data: options.data,
+		dataType: options.dataType
+	};
+	if (debug.url != Sq.base_url + 'map/getLeads' 
+		 && debug.url != Sq.base_url + 'map/getPolylines'
+		 && debug.url != Sq.base_url + 'administration/refresh_cp_apps'
+		 && debug.url != Sq.base_url + 'dashboard/panel_appointments'
+		 && debug.url != Sq.base_url + 'popup/ajax_login') {
+		$.post(Sq.base_url + 'help/sendFeedback', { 'error':true, 'debug':JSON.stringify(debug) });
+	} else {
+		return false;
+	}
+	
+	// options.url
+	if (request.status == 401) {
+		showModalPopup('ajax_login', options);
+	} else {
+		alert('Ajax error. Try refreshing the page, then try again. The site admin have been notified of the error.');
+	}
+});
 
 $.ajaxSetup({
 	beforeSend: function(request, settings) {

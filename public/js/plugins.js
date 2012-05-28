@@ -25,16 +25,16 @@
 	});
 	$('#minisearch_results .clickable').live('click', function(e) {
 		var leadID = $(this).data('leadid');
-		if (URI_STRING == '/leads') {
+		if (Sq.uri_string == '/leads') {
 			$('.leadrow:data(leadid,'+leadID+')').click();
 		} else {
-			window.location = SITE_URL + 'leads#' + leadID;
+			window.location = Sq.base_url + 'leads#' + leadID;
 		}
 	});
 	
 	$('.btn_delete_message').live('click', function(e) {
 		if (!confirm('Are you sure?')) return false;
-		$.post(SITE_URL + 'messages/delete/' + $(this).data('messageid'), function(response) {
+		$.post(Sq.base_url + 'messages/delete/' + $(this).data('messageid'), function(response) {
 			if (typeof(response) != 'object') {
 				return alert('Something terrible just happened.');
 			}
@@ -62,7 +62,7 @@
 	$('#btn_new_appointment').live('click', new_appointment);
 	
 	// Initialize nav menu
-	var baseURI = URI_STRING.split('/')[0];
+	var baseURI = Sq.uri_string.split('/')[0];
 	$('nav > span > a').each(function(){
 		var $item = $(this);
 		var $container = $item.parent();

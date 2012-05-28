@@ -2,8 +2,8 @@
 		<hgroup>
 			<h1>View Leads</h1>
 		</hgroup>
-		<input type="hidden" id="franchise_location" value="<? //$this->franchise->city.' '.$this->franchise->province ?>" />
-		<article class="ovPanel halfwidth span8" id="panel_leads_view">
+		<input type="hidden" id="franchise_location" value="1<? //$this->franchise->city.' '.$this->franchise->province ?>" />
+		<article class="span8" id="panel_leads_view">
 			<?= $clients ?>
 		</article>
 		<article class="span4" id="panel_leads_view_details">
