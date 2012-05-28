@@ -26,9 +26,9 @@
 				display: none;
 			}
 		</style>
-<?php if ($responsive): ?>
+		<?php if ($responsive): ?>
 		<link href="<?php echo URL::to_asset('bootstrap/css/responsive.css'); ?>" rel="stylesheet">
-<?php endif; ?>
+		<?php endif; ?>
 		<link href="<?php echo URL::to_asset('jquery-ui-bootstrap/css/custom-theme/jquery-ui-1.8.16.custom.css'); ?>" rel="stylesheet">
 		<link href="<?php echo URL::to_asset('css/squire.css'); ?>" rel="stylesheet">
 		<?php echo Asset::container('header')->styles(); ?>
@@ -81,16 +81,20 @@
 
 		</div><!--/.fluid-container-->
 
-
+		<script type="text/javascript">
+			var Quill = {
+				navtimers: []
+			};
+			
+		</script>
 		<script src="<?php echo URL::to_asset('js/jquery.min.js'); ?>"></script>
 		<script src="<?php echo URL::to_asset('js/jquery-ui.min.js'); ?>"></script>
-		<script src="<?php echo URL::to_asset('js/jquery-ui-timepicker.js'); ?>"></script>
+		<script src="<?php echo URL::to_asset('js/jquery-ui-timepicker.js'); // breaks leads_submit.js ?>"></script>
 		<script src="<?php echo URL::to_asset('js/jquery-validation.js'); ?>"></script>
 		<script src="<?php echo URL::to_asset('js/jquery-validation-methods.min.js'); ?>"></script>
 		<script src="<?php echo URL::to_asset('bootstrap/js/bootstrap.min.js'); ?>"></script>
-		<?php echo Asset::container('footer')->scripts(); ?>
 		<script src="<?php echo URL::to_asset('js/squire.js'); ?>"></script>
-
+		<?php echo Asset::container('footer')->scripts(); ?>
 		<?php Anbu::render(); ?>
 	</body>
 </html>

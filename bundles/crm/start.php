@@ -1,12 +1,15 @@
 <?php
 
 Laravel\Autoloader::map(array(
-	'Crm_Clients_Controller'    => __DIR__.DS.'/controllers/clients'.EXT,
+	// Controllers
+	'Crm_Clients_Controller'        => __DIR__.DS.'/controllers/clients'.EXT,
 	'Crm_Communications_Controller' => __DIR__.DS.'/controllers/communications'.EXT,
-	'Crm_Comments_Controller' => __DIR__.DS.'/controllers/comments'.EXT,
-	'Crm\\Client'    => __DIR__.DS.'/models/client'.EXT,
+	'Crm_Comments_Controller'       => __DIR__.DS.'/controllers/comments'.EXT,
+	'Crm_Leads_Controller'          => __DIR__.DS.'/controllers/leads'.EXT,
+	 // Models
+	'Crm\\Client'        => __DIR__.DS.'/models/client'.EXT,
 	'Crm\\Communication' => __DIR__.DS.'/models/communication'.EXT,
-	'Crm\\Comment' => __DIR__.DS.'/models/comment'.EXT,
+	'Crm\\Comment'       => __DIR__.DS.'/models/comment'.EXT,
 ));
 
 use Crm\Client;
@@ -29,7 +32,7 @@ Route::get('clients/(:num)/communications', function($client_id)
 {
 	return Route::forward('get', 'communications/for_client/'.$client_id);
 });
-Route::controller(array('crm::clients', 'crm::communications', 'crm::comments'));
+Route::controller(array('crm::clients', 'crm::communications', 'crm::comments', 'crm::leads'));
 
 
 // Add action buttons
