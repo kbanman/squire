@@ -10,13 +10,17 @@ class Crm_Leads_Controller extends \Protected_Controller {
 
 	public $restful = true;
 	
+	/**
+	 * Get leads
+	 */
+	
 	public function get_index()
 	{
 
 		Asset::container('footer')->add('leads_submit', 'js/leads_view.js');
 		Asset::container('footer')->add('scrollTo', 'js/jquery.scrollTo-1.4.2-min.js','leads_submit');
 		
-		// Paginated list of clients
+		// Get the first 10 clients for testing 
 		$clients = Client::take(10)->get(array('id','business_name','address_street','phone_main','type'));
 		$table = Squi\Table::of('Crm\\Client')
             ->with('columns', array(
@@ -64,28 +68,37 @@ class Crm_Leads_Controller extends \Protected_Controller {
 		return $layout;
 	}
 	
-	public function post_getDetails($lead_id = null) {
+	/**
+	 * Lead details
+	 * @param int $lead_id
+	 */
+	
+	public function post_details($lead_id = null) {
 		
-//			if (is_null($lead_id) && Request::ajax())
-//			{
-//				return Response::make(json_encode(array(
-//					'status' => 'error',
-//					'errors' => $comment->validation_errors(),
-//				)), 400);
-//			}
+			// Don't know how you want to approach error handling
+			if(is_null($lead_id) OR !Request::ajax())
+				return 'ERROR: Lead ID cannot be null / Not an ajax request';
 			
-			$lead = Client::find($lead_id);
+			$lead = Client::find(500);
 			
-			if(Request::ajax()) {
-				return View::make('partials.leads.details')
-						->with('lead',$lead);
+			if(!is_null($lead))
+			{
+				if(Request::ajax()) {
+					return View::make('partials.leads.details')
+							->with('lead',$lead);
+				}
 			}
+			
+			return '<h1>Lead not found</h1>';
 
 	}
 	
+	/**
+	 * Sumbit a new lead
+	 */
+	
 	public function get_submit()
 	{
-		Asset::container('footer')->add('scripts', 'js/script.js');
 		Asset::container('footer')->add('leads_submit', 'js/leads_submit.js');
 
 		$panel = View::of('panel')

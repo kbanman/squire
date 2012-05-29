@@ -2,7 +2,6 @@ $(document).ready(function() {
 	// Create the datepicker and set it to today
 	$('#submission_date').datepicker({	dateFormat:'d-M-yy'	}).datepicker('setDate','+0');
 	
-	
 	// Populate time fields
 	for (var i=1; i<=12; i++) {
 		$("#time_start_hour, #time_end_hour").append("\n"+'<option value="'+i+'">'+i+'</option>');
@@ -150,4 +149,11 @@ function submitLeadsForm() {
 			alert(response.message);
 		}
 	});
+function zeroPad (num, count) {
+	var numZeropad = num + '';
+	while(numZeropad.length < count) {
+		numZeropad = '0' + numZeropad;
+	}
+	return numZeropad;
+}
 }
