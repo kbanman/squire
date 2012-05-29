@@ -1,12 +1,12 @@
-<section class="maincontent panelgroup clearfix">
-		<hgroup>
+<div class="row">
+		<div class="span8" id="panel_leads_view">
 			<h1>View Leads</h1>
-		</hgroup>
-		<input type="hidden" id="franchise_location" value="1<? //$this->franchise->city.' '.$this->franchise->province ?>" />
-		<article class="span8" id="panel_leads_view">
+			<input type="hidden" id="franchise_location" value="" />
 			<?= $clients ?>
-		</article>
-		<article class="span4" id="panel_leads_view_details">
-			<h3 style="margin-top:.7em;">Select a lead for more details</h3>
-		</article>
-	</section>
+		</div>
+		<div class="span4">
+			<div id="panel_leads_view_details" class="ovPanel">
+				<h3>Select a lead for more details</h3>
+			</div>
+		</div>
+</div>

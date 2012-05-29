@@ -13,8 +13,6 @@ class Crm_Leads_Controller extends \Protected_Controller {
 	public function get_index()
 	{
 
-		Asset::container('footer')->add('scripts', 'js/script.js');
-		Asset::container('footer')->add('plugins', 'js/plugins.js');
 		Asset::container('footer')->add('leads_submit', 'js/leads_view.js');
 		Asset::container('footer')->add('scrollTo', 'js/jquery.scrollTo-1.4.2-min.js','leads_submit');
 		
@@ -68,9 +66,19 @@ class Crm_Leads_Controller extends \Protected_Controller {
 	
 	public function post_getDetails($lead_id = null) {
 		
+//			if (is_null($lead_id) && Request::ajax())
+//			{
+//				return Response::make(json_encode(array(
+//					'status' => 'error',
+//					'errors' => $comment->validation_errors(),
+//				)), 400);
+//			}
+			
+			$lead = Client::find($lead_id);
+			
 			if(Request::ajax()) {
 				return View::make('partials.leads.details')
-						->with('lead_id',$lead_id);
+						->with('lead',$lead);
 			}
 
 	}
@@ -81,7 +89,7 @@ class Crm_Leads_Controller extends \Protected_Controller {
 		Asset::container('footer')->add('leads_submit', 'js/leads_submit.js');
 
 		$panel = View::of('panel')
-					->with('content', View::make('crm::leads.submit'));
+					->with('content', View::make('partials.leads.submit'));
 					
 		Section::append('content', $panel);
 

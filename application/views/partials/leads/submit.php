@@ -105,7 +105,7 @@
 								<option value="ext">Exterior</option>
 								<option value="int">Interior</option>
 								<option value="int_ext">Interior &amp; Exterior</option>
-							<? (Crm\Flexfields::makeOptions('job_type'))?>
+							
 							
 							</select>
 						</td>

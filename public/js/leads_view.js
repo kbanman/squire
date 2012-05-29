@@ -25,7 +25,7 @@ $(document).ready(function() {
 	$('#btn_leads_detail_save').live('click', function(e) {
 		var leadID = $('#panel_leads_view_details').data('leadid');
 		var $form = $('#leaddetails_editing');
-		$.post(Sq.base_url + 'leads/editLead/' + leadID, $form.serialize(), function(response) {
+		$.post(Sq.site_url('leads/editLead/' + leadID), $form.serialize(), function(response) {
 			if (typeof(response) != 'object') {
 				return alert('Unknown error saving lead details');
 			}
@@ -93,7 +93,7 @@ function showLeadDetails(leadID)
 	var $detailPanel = $('#panel_leads_view_details').empty().append('<h3>Loading</h3>').data('leadid', leadID);
 	
 	// Send off the request
-	$.post(Sq.base_url + 'leads/getDetails/' + leadID, function(response) {
+	$.post(Sq.site_url('leads/getDetails/' + leadID) ,function(response) {
 		if (typeof(response) == 'object') {
 			$detailPanel.append('<p>'+response.message+'</p>');
 			$('h3',$detailPanel).text('Ajax Error');
@@ -104,12 +104,12 @@ function showLeadDetails(leadID)
 		} else {
 			$detailPanel.empty().append($(response).contents());
 		}
-		codeAddress($('#address_street').text() + ' ' + $('#franchise_location').val());
+		//codeAddress($('#address_street').text() + ' ' + $('#franchise_location').val());
 		Quill.currentClient = {
 			'id': leadID,
 			'name': $('#client_name',$detailPanel).text()
 		}
-	});
+	}, 'html');
 }
 
 function createStreetView(latLng) {
@@ -142,7 +142,7 @@ function codeAddress(address)
 function editLead(callback_load)
 {
 	var leadID = $('#panel_leads_view_details').data('leadid');
-	$.get(Sq.base_url + 'leads/getEditForm/' + leadID, function(response) {
+	$.get(Sq.site_url('leads/getEditForm/' + leadID), function(response) {
 		// Hide static details, show edit form
 		var $staticTable = $('.leaddetails').hide().after(response);
 		// Hide edit button, show Cancel
@@ -230,7 +230,7 @@ function saveToCpower()
 	var leadID = $('#panel_leads_view_details').data('leadid');
 	if (!leadID || $('#btn_savetocpower').hasClass('disabled')) return false;
 	if (!confirm('Are you sure? This action cannot be undone')) return false;
-	$.post(Sq.base_url + 'opencpro/addLead/' + leadID, function(response) {
+	$.post(Sq.site_url('leads/addLead/' + leadID), function(response) {
 		if (typeof(response) != 'object') {
 			return alert('An unknown error occurred. Please report this.');
 		}
@@ -279,4 +279,9 @@ function saveToCpower()
 		// Success; reload lead detail panel
 		showLeadDetails(leadID);
 	});
+}
+
+function scrollToLead(leadID) {
+	$row = (leadID.jquery)? leadID: $('.leadrow:data(leadid,'+leadID+')');
+	$.scrollTo($row, { duration:1000, offset: {left:0,top:-40}});
 }
