@@ -31,7 +31,7 @@ Route::get('clients/(:num)/communications', function($client_id)
 {
 	return Route::forward('get', 'communications/for_client/'.$client_id);
 });
-Route::controller(array('crm::clients', 'crm::communications', 'crm::comments'));
+Route::controller(array('crm::clients', 'crm::communications', 'crm::comments', 'crm::leads'));
 
 
 // Add action buttons
