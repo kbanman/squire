@@ -79,7 +79,7 @@ class Crm_Leads_Controller extends \Protected_Controller {
 			if(is_null($lead_id) OR !Request::ajax())
 				return 'ERROR: Lead ID cannot be null / Not an ajax request';
 			
-			$lead = Client::find(500);
+			$lead = Client::find($lead_id);
 			
 			if(!is_null($lead))
 			{
