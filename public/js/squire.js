@@ -1,12 +1,23 @@
-// The Sq global should be defined prior to including this file
-if (typeof Sq === 'undefined') { var Sq = {}; }
-
 /**
  * Global helpers
  */
 String.prototype.trim = function() {
 	return this.replace(/^\s+|\s+$/g,'');
 }
+
+function empty(v)
+{
+	var k;
+	if (v === '' || v === 0 || v === '0' || v === null || v === false || typeof v === 'undefined') {
+		return true;
+	}
+	if (typeof v == 'object') {
+		for (k in v) { return false; }
+		return true;
+	}
+	return false;
+}
+
 
 /**
  * Activate form widgets

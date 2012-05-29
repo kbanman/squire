@@ -7,25 +7,6 @@ return array(
 	{
 		$config = Config::get('squire');
 
-		Asset::add('bootstrap-css', 'bootstrap/css/bootstrap.css');
-		if ($config['responsive'])
-		{
-			Asset::add('bootstrap-responsive-css', 'bootstrap/css/bootstrap-responsive.css');
-		}
-		Asset::container('header')
-			->add('jquery-ui-bootstrap', 'jquery-ui-bootstrap/bootstrap/bootstrap.css')
-			->add('bootstrap-mods-css', 'bootstrap/css/bootstrap-mod.css');
-
-		Asset::add('jquery', 'js/jquery-1.7.1.min.js');
-		Asset::add('jquery-ui', 'js/jquery-ui-1.8.17.custom.min.js');
-
-		Asset::add('bootstrap-js-alert', 'bootstrap/js/alert.js');
-		Asset::add('bootstrap-js-button', 'bootstrap/js/button.js');
-		Asset::add('bootstrap-js-modal', 'bootstrap/js/modal.js');
-		Asset::add('bootstrap-js-typeahead', 'bootstrap/js/typeahead.js');
-				Asset::add('squire-js', 'js/squire.js');
-		Asset::add('leads_submit', 'js/leads_submit.js','script-js');
-
 		// Add the default values from config
 		foreach ($config as $var => $value)
 		{

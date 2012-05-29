@@ -190,6 +190,17 @@ function append_class(&$existing, $new, $stringify = false)
 	$stringify && $existing = implode(' ', $existing);
 }
 
+// Search helper
+function highlight_term($needle, $haystack)
+{
+	$start = stripos($haystack, $needle);
+	$before = substr($haystack, 0, $start);
+	$term = substr($haystack, $start, strlen($needle));
+	$after = substr($haystack, $start + strlen($needle));
+
+	return $before.'<span class="highlight">'.$term.'</span>'.$after;
+}
+
 /*
 |--------------------------------------------------------------------------
 | Register composers

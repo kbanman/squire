@@ -26,9 +26,9 @@
 				display: none;
 			}
 		</style>
-		<?php if ($responsive): ?>
+	<?php if ($responsive): ?>
 		<link href="<?php echo URL::to_asset('bootstrap/css/responsive.css'); ?>" rel="stylesheet">
-		<?php endif; ?>
+	<?php endif; ?>
 		<link href="<?php echo URL::to_asset('jquery-ui-bootstrap/css/custom-theme/jquery-ui-1.8.16.custom.css'); ?>" rel="stylesheet">
 		<link href="<?php echo URL::to_asset('css/squire.css'); ?>" rel="stylesheet">
 		<?php echo Asset::container('header')->styles(); ?>
@@ -61,7 +61,10 @@
 							<?php echo Section::yield('nav'); ?>
 						</ul>
 						<?php echo $search; ?>
-					</div><!--/.nav-collapse -->
+						<div class="action-buttons">
+							<?php echo Section::yield('header_buttons'); ?>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -87,7 +90,7 @@
 		<script src="<?php echo URL::to_asset('js/jquery-validation.js'); ?>"></script>
 		<script src="<?php echo URL::to_asset('js/jquery-validation-methods.min.js'); ?>"></script>
 		<script src="<?php echo URL::to_asset('bootstrap/js/bootstrap.min.js'); ?>"></script>
-		<script src="<?php echo URL::to_asset('js/squire.js'); ?>"></script>
 		<?php echo Asset::container('footer')->scripts(); ?>
+		<script src="<?php echo URL::to_asset('js/squire.js'); ?>"></script>
 	</body>
 </html>

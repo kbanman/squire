@@ -9,6 +9,10 @@
 .navbar form .btn {
   margin: 0;
 }
+.navbar .action-buttons {
+  float: right;
+  margin-right: 1em;
+}
 .well.keyvalue {
   min-height: 0 !important;
 }

@@ -7,7 +7,8 @@ use Crm\Client;
  */
 class Crm_Clients_Controller extends \Protected_Controller {
 
-	public $restful = true;
+	public $restful = true,
+			$layout = 'template';
 	
 	public function get_index()
 	{
@@ -19,23 +20,19 @@ class Crm_Clients_Controller extends \Protected_Controller {
 			->with('row_attr', function($client)
 			{
 				return array(
-					'class' => 'clickable',
+					'class'    => 'clickable',
 					'data-uri' => 'clients/'.$client->id,
 				);
 			})
-			->with('class', array('table', 'table-compact'));
+			->with('class', array('table', 'table-compact'))
+			->with('norecords_message', 'No clients found');
 
 		$panel = View::of('panel')
 			->with('content', $table);
 
-
 		Section::append('content', $panel."\n".$clients->links());
 
-		$layout = View::make('template')
-			->with('page_heading', 'Clients');
-		
-		return $layout;
-		
+		$this->layout->page_heading = 'Clients';
 	}
 
 	/*
@@ -61,10 +58,7 @@ class Crm_Clients_Controller extends \Protected_Controller {
 		Event::fire('content_panels', array('clients_detail', $client));
 		Section::append('content', '</div>');
 
-		$layout = \View::make('template')->with('page_heading', $client->name());
-		
-		return $layout;
-		
+		$this->layout->page_heading = $client->name();
 	}
 
 }

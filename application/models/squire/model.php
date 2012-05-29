@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 class Squire_Model extends Eloquent {
 	

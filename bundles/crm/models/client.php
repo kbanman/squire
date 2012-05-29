@@ -8,82 +8,82 @@ class Client extends \Squire_Model {
 	
 	public static $_properties = array(
 		'id' => array(
-			'label' => 'Client ID',
+			'label'   => 'Client ID',
 			'display' => false,
-			'form' => false,
+			'form'    => false,
 		),
 		'created_on' => array(
-			'label' => 'Creation Date',
+			'label'   => 'Creation Date',
 			'display' => false,
-			'form' => false,
+			'form'    => false,
 		),
 		'updated_on' => array(
-			'label' => 'Last Updated',
+			'label'   => 'Last Updated',
 			'display' => false,
-			'form' => false,
+			'form'    => false,
 		),
 		'type' => array(
-			'label' => 'Type',
+			'label'   => 'Type',
 			'display' => false,
-			'form' => false,
+			'form'    => false,
 		),
 		'business_name' => array(
-			'label' => 'Name',
-			'weight' => 'primary',
+			'label'   => 'Name',
+			'weight'  => 'primary',
 		),
 		'contact' => array(
-			'label' => 'Contact',
-			'weight' => 'important',
+			'label'   => 'Contact',
+			'weight'  => 'important',
 		),
 		'address_street' => array(
-			'label' => 'Address',
-			'weight' => 'slightly-important',
+			'label'   => 'Address',
+			'weight'  => 'slightly-important',
 		),
 		'address_street2' => array(
-			'label' => 'Address 2',
-			'weight' => 'slightly-important',
+			'label'   => 'Address 2',
+			'weight'  => 'slightly-important',
 		),
 		'address_city' => array(
-			'label' => 'City',
-			'weight' => 'important',
+			'label'   => 'City',
+			'weight'  => 'important',
 		),
 		'address_province' => array(
-			'label' => 'Province',
-			'weight' => 'important',
+			'label'   => 'Province',
+			'weight'  => 'important',
 		),
 		'address_country' => array(
 			'label' => 'Country',
 			'display' => false,
-			'weight' => 'not-important',
+			'weight'  => 'not-important',
 		),
 		'address_postalcode' => array(
 			'label' => 'Postal Code',
 			'display' => false,
-			'weight' => 'not-important',
+			'weight'  => 'not-important',
 		),
 		'phone_main' => array(
-			'label' => 'Phone',
-			'weight' => 'very-important',
+			'label'   => 'Phone',
+			'weight'  => 'very-important',
 		),
 		'phone_main_ext' => array(
-			'label' => 'Phone Ext.',
-			'weight' => 'important',
+			'label'   => 'Phone Ext.',
+			'weight'  => 'important',
 		),
 		'phone_other' => array(
-			'label' => 'Other Phone',
-			'weight' => 'slightly-important'
+			'label'   => 'Other Phone',
+			'weight'  => 'slightly-important'
 		),
 		'phone_fax' => array(
-			'label' => 'Fax Number',
-			'weight' => 'not-important'
+			'label'   => 'Fax Number',
+			'weight'  => 'not-important'
 		),
 		'email' => array(
-			'label' => 'Email',
-			'weight' => 'fairly-important',
+			'label'   => 'Email',
+			'weight'  => 'normal',
 		),
 		'notes' => array(
-			'label' => 'Notes',
-			'weight' => 'not-important',
+			'label'   => 'Notes',
+			'weight'  => 'not-important',
 		),
 	);
 
