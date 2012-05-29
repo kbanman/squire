@@ -77,8 +77,8 @@ class Crm_Leads_Controller extends \Protected_Controller {
 		
 			// Don't know how you want to approach error handling
 			if(is_null($lead_id) OR !Request::ajax())
-				return 'ERROR: Lead ID cannot be null / Not an ajax request';
-			
+				return Response::error(404);
+		
 			$lead = Client::find($lead_id);
 			
 			if(!is_null($lead))
@@ -90,7 +90,7 @@ class Crm_Leads_Controller extends \Protected_Controller {
 			}
 			
 			return '<h1>Lead not found</h1>';
-
+			
 	}
 	
 	/**
