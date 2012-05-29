@@ -81,12 +81,6 @@
 
 		</div><!--/.fluid-container-->
 
-		<script type="text/javascript">
-			var Quill = {
-				navtimers: []
-			};
-			
-		</script>
 		<script src="<?php echo URL::to_asset('js/jquery.min.js'); ?>"></script>
 		<script src="<?php echo URL::to_asset('js/jquery-ui.min.js'); ?>"></script>
 		<script src="<?php echo URL::to_asset('js/jquery-ui-timepicker.js'); // breaks leads_submit.js ?>"></script>
@@ -95,6 +89,5 @@
 		<script src="<?php echo URL::to_asset('bootstrap/js/bootstrap.min.js'); ?>"></script>
 		<script src="<?php echo URL::to_asset('js/squire.js'); ?>"></script>
 		<?php echo Asset::container('footer')->scripts(); ?>
-		<?php Anbu::render(); ?>
 	</body>
 </html>
