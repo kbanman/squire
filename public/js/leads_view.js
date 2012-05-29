@@ -93,7 +93,7 @@ function showLeadDetails(leadID)
 	var $detailPanel = $('#panel_leads_view_details').empty().append('<h3>Loading</h3>').data('leadid', leadID);
 	
 	// Send off the request
-	$.post(Sq.site_url('leads/getDetails/' + leadID) ,function(response) {
+	$.post(Sq.site_url('leads/details/' + leadID) ,function(response) {
 		if (typeof(response) == 'object') {
 			$detailPanel.append('<p>'+response.message+'</p>');
 			$('h3',$detailPanel).text('Ajax Error');
