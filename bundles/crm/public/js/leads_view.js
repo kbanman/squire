@@ -1,6 +1,7 @@
 $(document).ready(function() {
 	
-	$('.leadrow').click(function(e) {
+	$('.leadrow').click(function(e)
+	{
 		var $row = $(this);
 		showLeadDetails($row.data('leadid'));
 		$('.leadrow').removeClass('active');
@@ -16,8 +17,10 @@ $(document).ready(function() {
 	
 	$('#btn_leads_detail_edit').live('click', editLead);
 	
-	$('#btn_leads_detail_delete').live('click', function(e) {
-		if (confirm('Are you sure you want to delete this lead? This will NOT delete it from CPOWER, and cannot be undone')) {
+	$('#btn_leads_detail_delete').live('click', function(e)
+	{
+		if (confirm('Are you sure you want to delete this lead? This action cannot be undone.'))
+		{
 			deleteLead($('#panel_leads_view_details').data('leadid'));
 		}
 	});
@@ -43,7 +46,6 @@ $(document).ready(function() {
 			$('.leadrow:data(leadid,'+leadID+')').children().each(function(i){
 				$(this).text(newDetails[i]);
 			});
-		
 			
 			// Reload the details panel
 			showLeadDetails($('#panel_leads_view_details').data('leadid'));
@@ -51,7 +53,8 @@ $(document).ready(function() {
 		});
 	});
 	
-	$('#btn_wp_lookup').live('click', function(e){
+	$('#btn_wp_lookup').live('click', function(e)
+	{
 		showModalPopup('whitepages_result');
 	});
 	$('#btn_log_call').live('click', logCall);
@@ -112,19 +115,19 @@ function showLeadDetails(leadID)
 	}, 'html');
 }
 
-function createStreetView(latLng) {
-  // Note: constructed panorama objects have visible: true
-  // set by default.
-  var panoOptions = {
-    position: latLng,
-    addressControl: false,
-    linksControl: false,
-    panControl: false,
-    zoomControl: false,
-    enableCloseButton: false
-  };
- 
-  var panorama = new google.maps.StreetViewPanorama(document.getElementById('detailview_map'), panoOptions);
+function createStreetView(latLng)
+{
+	// Note: constructed panorama objects have visible:true set by default.
+	var panoOptions = {
+		position: latLng,
+		addressControl: false,
+		linksControl: false,
+		panControl: false,
+		zoomControl: false,
+		enableCloseButton: false
+	};
+
+	var panorama = new google.maps.StreetViewPanorama(document.getElementById('detailview_map'), panoOptions);
 }
 
 function codeAddress(address)
@@ -264,24 +267,8 @@ function deleteSubmission(e)
 	});
 }
 
-function saveToCpower()
+function scrollToLead(leadID)
 {
-	var leadID = $('#panel_leads_view_details').data('leadid');
-	if (!leadID || $('#btn_savetocpower').hasClass('disabled')) return false;
-	if (!confirm('Are you sure? This action cannot be undone')) return false;
-	$.post(Sq.base_url + 'opencpro/addLead/' + leadID, function(response) {
-		if (typeof(response) != 'object') {
-			return alert('An unknown error occurred. Please report this.');
-		}
-		if (response.status != 'success') {
-			return alert(response.message);
-		}
-		// Success; reload lead detail panel
-		showLeadDetails(leadID);
-	});
-}
-
-function scrollToLead(leadID) {
-	$row = (leadID.jquery)? leadID: $('.leadrow:data(leadid,'+leadID+')');
-	$.scrollTo($row, { duration:1000, offset: {left:0,top:-40}});
+	$row = (leadID.jquery)? leadID: $('.leadrow[data-leadid='+leadID+']');
+	$.scrollTo($row, { duration:1000, offset: {left:0, top:-40}});
 }

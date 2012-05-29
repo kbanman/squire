@@ -17,8 +17,10 @@ $(document).ready(function() {
 	attachFormEvents($('.leadform'));
 });
 
-function attachFormEvents($form){
-	$('input', $form).focus(function(){
+function attachFormEvents($form)
+{
+	$('input', $form).focus(function(e)
+	{
 		// If this is the last row and it is blank, add another row
 		if ($form.is('.leadform:not(.first)') && !isBlankRow($form.prev()) && !isBlankRow($form.next('.leadform'))) {
 			addLeadForm();
@@ -35,7 +37,7 @@ function attachFormEvents($form){
 		},
 		messages: {
 			lastname: {	required:'Last name is required'	},
-			phone: {	required:'Phone number is required'	},
+			phone: 	{	required:'Phone number is required'	},
 			address: {	required:'Address is required'	}
 		}
 	});
@@ -82,7 +84,8 @@ function removeLeadForm($form)
 	});
 }
 
-function submitLeadsForm() {
+function submitLeadsForm()
+{
 	// Validation
 	var $errorMessage = $('#leads_error_message');
 	var $dateField = $('#submission_date');
@@ -149,11 +152,14 @@ function submitLeadsForm() {
 			alert(response.message);
 		}
 	});
-function zeroPad (num, count) {
+
+}
+
+function zeroPad(num, count)
+{
 	var numZeropad = num + '';
 	while(numZeropad.length < count) {
 		numZeropad = '0' + numZeropad;
 	}
 	return numZeropad;
-}
 }
