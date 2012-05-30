@@ -20,6 +20,7 @@ class Crm_Leads_Controller extends \Protected_Controller {
 
 		Asset::container('footer')->add('jquery-scrollto', 'bundles/crm/js/jquery.scrollto-1.4.2.min.js');
 		Asset::container('footer')->add('leads_submit', 'bundles/crm/js/leads_view.js', 'jquery-scrollto');
+		Asset::container('header')->add('leads-css', 'bundles/crm/css/leads.css');
 		
 		// Get the first 10 clients for testing 
 		$clients = Client::take(10)->get();

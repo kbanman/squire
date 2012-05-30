@@ -16,15 +16,13 @@ label.error{
     border: 1px solid #ccc;
     border-radius: 0.3em 0.3em 0.3em 0.3em;
     box-shadow: 0 0 10px #eee;
-    float: left;
     padding: 0.8em;
     position: relative;
     width: auto;
     margin-bottom: 100px
 }
 .lead_detail hgroup {
-    border-bottom: 2px dotted #ccc;
-    margin-bottom: 0.6em;
+    margin-bottom: 1em;
     position: relative;
     width: 100%;
 }
@@ -33,16 +31,25 @@ label.error{
     font-size: 1.1em;
     font-weight: bold;
     margin-bottom: 0.3em;
-    margin-top: 0.4em;
+    margin: 0.4em 0 0.8em;
+    line-height: 1.1em;
+}
+.lead_detail p.lead {
+    margin-bottom: 0;
+    text-align: center;
 }
 .lead_detail .indicator_left {
 	display: block;
 	height: 20px;
 	left: -20px;
 	position: absolute;
-	top: 25px;
+	top: 32px;
 }
 .lead_detail th {
 	text-align: right;
     width: 72px;
+}
+
+body {
+    overflow-y: scroll;
 }

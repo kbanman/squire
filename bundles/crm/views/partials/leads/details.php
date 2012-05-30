@@ -44,40 +44,4 @@
 		</tr><?php endif; ?>
 	</table>
 	<div id="detailview_map"></div>
-	<span class="bottombuttons">
-		<a class="button" id="btn_log_call">Log Call</a>
-		<a class="button" id="btn_wp_lookup">WhitePages Lookup</a>
-		<?php if ($lead->jobkey): ?><a class="button blue" target="_blank" href="https://cpower.collegepro.com/Leads/JobDetail.aspx?JobKey=<?php echo $lead->jobkey ?>">View in CPOWER</a>
-		<?php else: ?><a class="button" id="btn_savetocpower">Save to CPOWER</a>
-		<?php endif; ?>
-	</span>
-	<?php //if ($apps = $lead->getAppointments()): ?>
-	<br />
-	<h3>Appointments</h3>
-	<table class="nohighlight">
-	 	<tr>
-			<th>Date</th>
-			<th>Type</th>
-		</tr>
-	<?php //foreach ($apps as $app): ?>
-		<tr>
-			<td><?php //echo date('d-M g:i a', $app->timestamp_scheduled) ?></td>
-			<td><?php //echo $app->flexLabel('type') ?></td>
-		</tr>
-	<?php // endforeach; ?>
-	</table>
-	<?php // endif; if ($calls = $lead->getCalls()): ?>
-	<br />
-	<h3>Calls</h3>
-	<table class="nohighlight">
-	<?php // foreach ($calls as $call): ?>
-	 	<tr>
-			<th align="left"><?php //echo date('d-M g:i a', $call->timestamp_called) ?></th>
-		</tr>
-		<tr>
-			<td><?php //echo $call->left_message? '(Left Message)' : '' ?> <?php //echo $call->notes ?></td>
-		</tr>
-	<?php //endforeach; ?>
-	</table>
-	<?php //endif; ?>
 </div>

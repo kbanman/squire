@@ -24,7 +24,7 @@ label.error{
 }
 .lead_detail hgroup {
     border-bottom: 2px dotted #ccc;
-    margin-bottom: 0.6em;
+    margin-bottom: 1em;
     position: relative;
     width: 100%;
 }
@@ -45,4 +45,7 @@ label.error{
 .lead_detail th {
 	text-align: right;
     width: 72px;
+}
+body, html {
+    overflow-y: scroll;
 }
