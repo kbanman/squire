@@ -37,4 +37,6 @@ return array(
 
 	'docs' => array('handles' => 'docs'),
 
+	'squire' => array('auto' => true),
+
 );

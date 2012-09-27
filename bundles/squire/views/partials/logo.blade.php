@@ -1,0 +1,1 @@
+					<a class="brand" href="{{ URL::to('/') }}">{{ $site_name }}</a>
