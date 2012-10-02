@@ -83,8 +83,16 @@ View::composer($config['partials']['template'], function($view) use ($config)
 // Top bar
 View::composer($config['partials']['top'], function($view) use ($config)
 {
+	$partials = array('logo', 'main_nav');
+
+	// Check if search is enabled
+	if (is_array($config['search']) && $config['search'])
+	{
+		$partials[] = 'search';
+	}
+
 	// Nest the partials
-	foreach (array('logo', 'main_nav', 'search') as $partial)
+	foreach ($partials as $partial)
 	{
 		if ($path = $config['partials'][$partial])
 		{
@@ -133,6 +141,8 @@ View::composer($config['partials']['main_nav'], function($view) use ($config)
 // Search
 View::composer($config['partials']['search'], function($view) use ($config)
 {
+	if ( ! $config['search']) return;
+
 	foreach ($config['search'] as $var => $value)
 	{
 		! isset($view->$var) and $view->$var = $value;

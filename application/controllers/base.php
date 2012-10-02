@@ -2,6 +2,8 @@
 
 class Base_Controller extends Squire_Controller {
 
+	public $restful = true;
+
 	/**
 	 * Catch-all method for requests that can't be matched.
 	 *
