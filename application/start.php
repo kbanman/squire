@@ -167,7 +167,9 @@ date_default_timezone_set(Config::get('application.timezone'));
 |
 */
 
-if ( ! Request::cli() and Config::get('session.driver') !== '')
+if ( ! Laravel\Request::cli() and Config::get('session.driver') !== '')
 {
 	Session::load();
 }
+
+include('app_start.php');
