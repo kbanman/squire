@@ -39,4 +39,6 @@ return array(
 
 	'squire' => array('auto' => true),
 
+	'squi' => array('auto' => true),
+
 );
