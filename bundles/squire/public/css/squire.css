@@ -82,6 +82,9 @@ hgroup .buttons li {
 .clickable, tr.ajax {
   cursor: pointer;
 }
+#mini-search {
+  margin-left: 10px;
+}
 #mini-search .noresult {
   padding: 1em 2em 0.4em;
 }
