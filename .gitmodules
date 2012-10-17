@@ -5,3 +5,6 @@
 [submodule "vendor/jquery"]
 	path = vendor/jquery
 	url = https://github.com/jquery/jquery.git
+[submodule "bundles/squi"]
+	path = bundles/squi
+	url = https://github.com/kbanman/laravel-squi.git
