@@ -13,8 +13,9 @@ grunt >/dev/null 2>&1
 cd ../..
 
 echo "Make storage writable..."
-chmod -R 0777 storage/views
+chmod 0777 storage/views
 
 echo "Soft linking squire assets..."
 cd public/bundles
-ln -s ../../bundles/squire/public squire
+ln -s ../../bundles/squire/public/ ./squire
+cd ../..
