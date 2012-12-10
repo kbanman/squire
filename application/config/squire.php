@@ -2,9 +2,11 @@
 
 return array(
 
-	'partials' => array(
-		//'template' => 'layout.template',
-		'top' => 'layout.top',
+
+	'nav' => array(
+		'Customers' => array(
+			'uri' => 'customers',
+		),
 	),
 
 );
