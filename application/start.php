@@ -172,4 +172,25 @@ if ( ! Laravel\Request::cli() and Config::get('session.driver') !== '')
 	Session::load();
 }
 
+/*
+|--------------------------------------------------------------------------
+| Register composers
+|--------------------------------------------------------------------------
+|
+| Uses the composer syntax from Laravel 1.x, where composers are stored in
+| an external file. This has the additional benifit of allowing you to name
+| views at the same time.
+|
+*/
+$composers = include 'composers.php';
+foreach ($composers as $id => $composer)
+{
+	if (is_array($composer))
+	{
+		View::name($id, array_shift($composer));
+		$composer = reset($composer);
+	}
+	View::composer($id, $composer);
+}
+
 include('app_start.php');

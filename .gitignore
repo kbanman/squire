@@ -35,3 +35,6 @@ dwsync.xml
 intermediate
 publish
 .idea
+
+# Don't commit published bundle assets
+public/bundles/*
